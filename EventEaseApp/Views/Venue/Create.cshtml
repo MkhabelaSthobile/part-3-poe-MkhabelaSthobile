@@ -1,0 +1,43 @@
+﻿@model EventEaseApp.Models.Venue
+@Html.AntiForgeryToken()
+
+
+@{
+    ViewData["Title"] = "Venue";
+}
+
+<h2>Add a Venue</h2>
+
+<form asp-action="Create" enctype="multipart/form-data">
+    
+    <div class="form-group">
+        <label asp-for="VenueName">Name:</label>
+        <input asp-for="VenueName" class="form-control" />
+        <span asp-validation-for="VenueName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Location">Location:</label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Capacity">Capacity:</label>
+        <input asp-for="Capacity" class="form-control" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImageFile" class="control-label"></label>
+        <input asp-for="ImageFile" class="form-control" type="file"/>
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+    <br/>
+    <button type="submit" value="Create" class="btn btn-primary">Save</button>|
+    <a asp-action="Index">Back to List</a>
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

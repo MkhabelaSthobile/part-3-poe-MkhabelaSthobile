@@ -1,0 +1,40 @@
+﻿@model EventEaseApp.Models.Booking
+
+@{
+    ViewData["Title"] = "Edit Booking";
+}
+
+<h2>Edit Booking</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="BookingID" />
+    <div class="form-group">
+        <label asp-for="BookingID" class="control-label"></label>
+        <input asp-for="BookingID" class="form-control" />
+        <span asp-validation-for="BookingID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Event_ID" class="control-label"></label>
+        <input asp-for="Event_ID" class="form-control" />
+        <span asp-validation-for="Event_ID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Venue_ID" class="control-label"></label>
+        <input asp-for="Venue_ID" class="form-control" />
+        <span asp-validation-for="Venue_ID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BookingDate" class="control-label"></label>
+        <input asp-for="BookingDate" class="form-control" type="date" />
+        <span asp-validation-for="BookingDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

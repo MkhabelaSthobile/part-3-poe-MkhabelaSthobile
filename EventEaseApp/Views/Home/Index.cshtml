@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4 text-primary">🎉 Welcome to EventEaseApp! 🎉</h1>
+    <p class="lead">Let us help you make your event one for the books</p>
+
+    <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Welcome" width="150" class="my-4" />
+
+    <div class="d-flex justify-content-center gap-3 mt-3">
+
+        <a asp-controller="Venue" asp-action="Index" class="btn btn-info btn-lg">
+            🏟️ Browse Venues
+        </a>
+
+        <a asp-controller="Event" asp-action="Create" class="btn btn-success btn-lg">
+            ➕ Create Event
+        </a>
+        <a asp-controller="Booking" asp-action="Index" class="btn btn-primary btn-lg">
+            📅 View Bookings
+        </a>
+        
+    </div>
+
+    <p class="text-muted mt-4">
+        Need help? Visit the
+        <a href="https://learn.microsoft.com/aspnet/core" target="_blank">ASP.NET Core Docs</a>.
+    </p>
+</div>
+
