@@ -18,12 +18,18 @@ CREATE TABLE Venue
 );
 
 
+CREATE TABLE EventType 
+(
+	EventTypeID INT IDENTITY(1,1) PRIMARY KEY,
+	Name		NVARCHAR(500) NOT NULL,
+);
 
 
 CREATE TABLE Event
 (
 	EventID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	Venue_ID INT NOT NULL REFERENCES Venue(VenueID),
+	EventType_ID INT NOT NULL REFERENCES EventType(EventTypeID),
 	EventName VARCHAR (250) NOT NULL,
 	EventDate date NOT NULL,
 	Description VARCHAR (250),
@@ -51,12 +57,23 @@ VALUES ('Living Room Jozi', 'Living Room, 5th Floor, 20 Kruger St, Johannesburg,
 
 
 
+--EventType Table
+INSERT INTO EventType(Name)
+VALUES
+('Conference'),
+('Wedding'),
+('Naming'),
+('Birthday'),
+('Concert');
+
+
+
 --Event Table
-INSERT INTO Event (Venue_ID, EventName, EventDate, Description)
-VALUES (1,'Zama Birthday Party', '2025-06-01', 'Zama is turning 12 and all her family and friends will be there. She is using a wheelchais so she will need space'),
-	   (2,'Wedding', '2025-06-12', 'It is a very small and intimate ceremony'),
-	   (3,'CWP End of year party', '2025-05-22', 'Only for the Finance Department'),
-	   (4,'Family Dinner', '2025-05-30', 'Just a family dinner');
+INSERT INTO Event (Venue_ID, EventType_ID, EventName, EventDate, Description)
+VALUES (1, 1,'Zama Birthday Party', '2025-06-01', 'Zama is turning 12 and all her family and friends will be there. She is using a wheelchais so she will need space'),
+	   (2, 2,'Wedding', '2025-06-12', 'It is a very small and intimate ceremony'),
+	   (3, 3,'CWP End of year party', '2025-05-22', 'Only for the Finance Department'),
+	   (4, 4,'Family Dinner', '2025-05-30', 'Just a family dinner');
 
 
 
@@ -68,6 +85,7 @@ VALUES (1, 1, '2025-07-01');
 
 
 SELECT * FROM Venue
+SELECT * FROM EventType
 SELECT * FROM Event
 SELECT * FROM Booking
 
