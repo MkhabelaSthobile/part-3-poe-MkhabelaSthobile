@@ -19,6 +19,12 @@
                 <select asp-for="Venue_ID" class="form-control" asp-items="ViewBag.VenueList"></select>
                 <span asp-validation-for="Venue_ID" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label>Event Type</label>
+                <select asp-for="EventType_ID" asp-items="@(new SelectList((IEnumerable<EventType>)ViewData["EventTypes"], "EventTypeID", "Name"))">
+                    <option value="">-- Select Type --</option>
+                </select>
+            </div>
 
             <div class="form-group">
                 <label asp-for="EventName" class="control-label"></label>

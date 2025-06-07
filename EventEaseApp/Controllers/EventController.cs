@@ -19,10 +19,30 @@ namespace EventEaseApp.Controllers
         }
 
         // GET: EventController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchType, int? venue_ID, DateTime? startDate, DateTime? endDate)
         {
-            var events = await _context.Event.Include(e => e.Venue).ToListAsync();
-            return View(events);
+            var events = _context.Event.Include(e => e.Venue).Include(e => e.EventType).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchType))
+            {
+                events = events.Where(e => e.EventType.Name == searchType);
+            }
+
+            if (venue_ID.HasValue)
+            {
+                events = events.Where(e => e.Venue_ID == venue_ID);
+            }
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                events = events.Where(e => e.EventDate >= startDate && e.EventDate <= endDate);
+            }
+
+            //Provide data for dropdown filters in the View
+            ViewData["EventTypes"] = _context.EventType.ToList();
+            ViewData["Venues"] = _context.Venue.ToList();
+
+            return View(await events.ToListAsync());
         }
 
 
@@ -34,7 +54,7 @@ namespace EventEaseApp.Controllers
                 return NotFound();
             }
 
-            var eventItem = await _context.Event.FirstOrDefaultAsync(e => e.EventID == id);
+            var eventItem = await _context.Event.Include(e => e.Venue).FirstOrDefaultAsync(e => e.EventID == id);
 
             if (eventItem == null) return NotFound();
 
@@ -51,7 +71,9 @@ namespace EventEaseApp.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.VenueList = new SelectList(_context.Venue.ToList(), "VenueID", "VenueName");
+            ViewData["Venues"] = _context.Venue.ToList();
+            ViewData["EventTypes"] = _context.EventType.ToList();
+            
             return View();
         }
 
@@ -71,6 +93,7 @@ namespace EventEaseApp.Controllers
             }
 
             ViewData["Venues"] = _context.Venue.ToList();
+            ViewData["EventTypes"] = _context.EventType.ToList();
             return View(eventItem);
 
         }
@@ -87,6 +110,7 @@ namespace EventEaseApp.Controllers
             }
 
             ViewData["Venues"] = _context.Venue.ToList();
+            ViewData["EventTypes"] = _context.EventType.ToList();
             return View(events);
         }
 
@@ -109,6 +133,7 @@ namespace EventEaseApp.Controllers
             }
 
             ViewData["Venues"] = _context.Venue.ToList();
+            ViewData["EventTypes"] = _context.EventType.ToList();
             return RedirectToAction(nameof(Index));
         }
 
