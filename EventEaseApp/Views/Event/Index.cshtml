@@ -6,7 +6,7 @@
 
 <h2>Events</h2>
 
-<form method="get" class="mb-4">
+<form method="get" asp-controller="Event" asp-action="Index" class="mb-4">
     <div class="row">
         <div class="col-md-3">
             <label>Event Type</label>
@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-3">
             <label>Venue</label>
-            <select name="venue_Id" class="form-control">
+            <select name="venue_ID" class="form-control">
                 <option value="">-- All Types --</option>
                 @foreach (var venue in (List<Venue>)ViewData["Venues"])
                 {
@@ -31,6 +31,10 @@
         <div class="col-md-3">
             <label>Start Date</label>
             <input type="date" name="startDate" class="form-control"/>
+        </div>
+        <div class="col-md-3">
+            <label>End Date</label>
+            <input type="date" name="endDate" class="form-control" />
         </div>
     </div>
     <div class="mt-3">

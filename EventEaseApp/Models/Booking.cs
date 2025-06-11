@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.ExceptionServices;
 
 namespace EventEaseApp.Models
 {
@@ -7,16 +8,16 @@ namespace EventEaseApp.Models
     public class Booking
     {
         [Key]
-        public int? BookingID { get; set; }
+        public int BookingID { get; set; }
 
         [Required(ErrorMessage = "Please select an event")]
-        public int? Event_ID { get; set; }
+        public int Event_ID { get; set; }
 
         [Required(ErrorMessage = "Please select a venue")]
-        public int? Venue_ID { get; set; }
+        public int Venue_ID { get; set; }
 
         [Required(ErrorMessage = "Please enter a booking date")]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
         public DateTime BookingDate { get; set; }
 
         [ForeignKey("Venue_ID")]

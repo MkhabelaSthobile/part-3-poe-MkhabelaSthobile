@@ -16,11 +16,20 @@ namespace EventEaseApp.Controllers
         }
 
         // GET: VenueController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
-            var venue = await _context.Venue.ToListAsync();
-            return View(venue);
+            var venues = _context.Venue.AsQueryable(); 
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                venues = venues.Where(v =>
+                    v.VenueName.Contains(searchString) ||
+                    v.Location.Contains(searchString));
+            }
+
+            return View(await venues.ToListAsync());
         }
+
 
         // GET: VenueController/Details/5
         public async Task<ActionResult> Details(int id)
@@ -97,7 +106,7 @@ namespace EventEaseApp.Controllers
 
                     _context.Update(venue);
                     await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Venue created successfully.";
+                    TempData["SuccessMessage"] = "Venue edited successfully.";
                 }
                 catch (DbUpdateConcurrencyException)
                 {

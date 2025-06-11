@@ -10,6 +10,7 @@ namespace EventEaseApp.Models
         public int EventTypeID { get; set; }
 
         [MaxLength(500)]
+        [Required]
         public string? Name { get; set; }
     }
 }

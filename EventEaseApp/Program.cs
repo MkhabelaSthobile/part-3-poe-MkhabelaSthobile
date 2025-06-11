@@ -23,6 +23,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseDeveloperExceptionPage();
+
 app.UseAuthorization();
 
 app.MapStaticAssets();

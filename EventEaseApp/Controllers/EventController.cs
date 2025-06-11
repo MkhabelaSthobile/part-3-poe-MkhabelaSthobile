@@ -22,10 +22,12 @@ namespace EventEaseApp.Controllers
         public async Task<ActionResult> Index(string searchType, int? venue_ID, DateTime? startDate, DateTime? endDate)
         {
             var events = _context.Event.Include(e => e.Venue).Include(e => e.EventType).AsQueryable();
+            Console.WriteLine($"searchType: {searchType}, venue_ID: {venue_ID}, startDate: {startDate}, endDate: {endDate}");
 
             if (!string.IsNullOrEmpty(searchType))
             {
-                events = events.Where(e => e.EventType.Name == searchType);
+                events = events.Where(e => e.EventType.Name.Contains(searchType));
+                events = events.Where(e => e.EventName != null && e.EventName.Contains(searchType));
             }
 
             if (venue_ID.HasValue)
@@ -63,14 +65,13 @@ namespace EventEaseApp.Controllers
 
 
         // GET: EventController/Create
-        //public IActionResult Create()
-        //{
-            //ViewBag.VenueID = new SelectList(_context.Venue, "VenueID", "VenueName");
-           // return View();
-       // }
-
         public IActionResult Create()
         {
+            var venueList = _context.Venue.ToList();
+            venueList.Insert(0, new Venue { VenueID = 0, VenueName = "-- Select Venue --" });
+            ViewBag.VenueList = new SelectList(venueList, "VenueID", "VenueName");
+
+
             ViewData["Venues"] = _context.Venue.ToList();
             ViewData["EventTypes"] = _context.EventType.ToList();
             
