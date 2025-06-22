@@ -85,6 +85,16 @@ namespace EventEaseApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Event eventItem)
         {
+            var conflict = await _context.Event
+            .Include(e => e.Venue)
+            .AnyAsync(b => b.Venue_ID == eventItem.Venue_ID
+                        && b.EventDate.Date == eventItem.EventDate.Date);
+
+            if (conflict)
+            {
+                ModelState.AddModelError("", "This venue is already booked for that date.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(eventItem);
